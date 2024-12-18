@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import { addProduct, getAllProducts, getProductById } from "../services/products.js";
+import { addProduct, deleteProduct, getAllProducts, getProductById, patchProduct } from "../services/products.js";
 
 export const getAllProductsController = async (req, res) => {
     const products = await getAllProducts();
@@ -33,3 +33,27 @@ res.status(201).json({
 });
   };
 
+export const patchProductController = async(req, res, next)=>{
+const { productId } = req.params;
+  const result = await patchProduct(productId, req.params);
+
+  if (!result) {
+    next(createHttpError(404, 'Product not found'));
+    return;
+  }
+  res.json({
+    status: 200,
+    message: `Successfully patched a product!`,
+    data: result.data,
+  });
+};
+
+export const deleteProductController = async(req, res, next)=>{
+  const { productId } = req.params;
+  const data = await deleteProduct({_id:productId});
+  if(!data) {
+    throw createHttpError(404, `Contact with id=${productId} not found`);
+}
+
+res.status(204).send();
+};

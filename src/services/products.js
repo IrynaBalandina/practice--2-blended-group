@@ -1,7 +1,20 @@
 import { productsModel } from "../db/models/products.js";
 
-export const getAllProducts = () => {
-    return productsModel.find();
+export const getAllProducts =  (filter) => {
+  const productsQuery = productsModel.find();
+
+  if (filter.category) {
+    productsQuery.where('category').equals(filter.category);
+  }
+
+  if (filter.maxPrice) {
+    productsQuery.where('price').lte(filter.maxPrice);
+  }
+
+  if (filter.minPrice) {
+    productsQuery.where('price').gte(filter.minPrice);
+  }
+    return productsQuery;
   };
 
   export const getProductById = (productId) =>{

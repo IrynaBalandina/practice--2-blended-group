@@ -5,11 +5,11 @@ import { createProductSchema } from "../validation/products.js";
 import {validateBody} from "../middlewares/validateBody.js";
 import { isValidationId } from "../middlewares/isValidId.js";
 
-const router = Router();
-router.get('/', ctrlWrapper(getAllProductsController));
-router.get('/:productId', isValidationId, ctrlWrapper(getProductsByIdController));
-router.post('/', validateBody(createProductSchema), ctrlWrapper(addProductController));
-router.patch('/:productId',isValidationId, ctrlWrapper(patchProductController));
-router.delete('/:productId', isValidationId, ctrlWrapper(deleteProductController));
+const productsRouter = Router();
+productsRouter.get('/', ctrlWrapper(getAllProductsController));
+productsRouter.get('/:productId', isValidationId, ctrlWrapper(getProductsByIdController));
+productsRouter.post('/', validateBody(createProductSchema), ctrlWrapper(addProductController));
+productsRouter.patch('/:productId',isValidationId, ctrlWrapper(patchProductController));
+productsRouter.delete('/:productId', isValidationId, ctrlWrapper(deleteProductController));
 
-export default router;
+export default productsRouter;

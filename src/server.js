@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-
+import authRouter from '../src/routers/auth.js';
 import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
@@ -13,8 +13,8 @@ export const setupServer = () => {
 
   app.use(express.json());
   app.use(cors());
-  
-  app.use("/products", productsRouter);
+  app.use("/auth", authRouter);
+  app.use('/products', productsRouter);
 
     app.use('*', notFoundHandler);
 
